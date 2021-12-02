@@ -25,9 +25,21 @@ module.exports = {
         res.status(200).json({note});
     },
     getNote: async (req, res, next) => {    
-        const { note_id } = req.value.params;
-        const note = await NoteModel.findById(note_id);
+        const { note_id } = req.value.params
+        const note = await NoteModel.findById(note_id)
         res.status(200).json({note});
+    },
+    getSharedNote: async (req, res, next) => {    
+        const note_id = req.params.note_id
+        const note_secretkey = req.params.note_key
+        const note = await NoteModel.findById(note_id)
+        if (note) {
+            if (note.secretkey == note_secretkey) {
+                res.status(200).json({note});
+            }
+        }
+        return res
+        .status(403)
     },
     replaceNote: async (req, res, next) => {
         const { note_id } = req.value.params;

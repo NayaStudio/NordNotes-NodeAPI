@@ -13,5 +13,7 @@ router.route('/:note_id')
     .patch(validate_param(schemas.idSchema, 'note_id'), validate_body(schemas.patchNoteSchema), notesController.updateNote)
     .delete(validate_param(schemas.idSchema, 'note_id'), notesController.deleteNote);
 
-router.route('shared/:note_id')
+router.route('/shared/:note_id/:note_key')
+    .get(notesController.getSharedNote)
+
 module.exports = router;
